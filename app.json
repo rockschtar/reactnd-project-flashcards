@@ -1,0 +1,12 @@
+{
+  "name": "UdacityFlashcards2",
+  "displayName": "UdacityFlashcards2",
+  "expo": {
+    "name": "UdacityFlashcards2",
+    "slug": "UdacityFlashcards2",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
