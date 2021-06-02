@@ -1,0 +1,45 @@
+import { ADD_CARD, ADD_DECK, DELETE_DECK, RECEIVE_DECKS } from '../actions/decks';
+
+export default function decks (state = {}, action) {
+    switch (action.type) {
+
+        case RECEIVE_DECKS:
+            const { decks } = action
+
+            return {
+                ...state,
+                ...decks
+            }
+        case ADD_DECK:
+            const { deck } = action
+            return {
+                ...state,
+                [deck.id]: deck
+            }
+
+        case DELETE_DECK:
+            const { deckId } = action
+            const filterdDecks = Object.values(state).filter((deck) => { return deck.id !== deckId})
+            return {
+                ...filterdDecks
+            }
+
+        case ADD_CARD:
+            const newDecks = state.decks.map((deck) => {
+                const cards = deck.cards
+                return (deck.id === action.deckId) ?
+                  {
+                      ...deck,
+                      "cards": cards.concat(action.card)
+                  } :
+                  deck
+            })
+            return {
+                ...state,
+                "decks": newDecks
+
+            }
+        default:
+            return state
+    }
+}
