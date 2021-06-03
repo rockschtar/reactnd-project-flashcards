@@ -1,29 +1,18 @@
 import React from 'react';
-import { Text, Alert } from 'react-native';
-import {
-    Body,
-    Button,
-    Container,
-    Content,
-    Form,
-    Header, Icon,
-    Input,
-    Item, Left, Right,
-    Spinner,
-    Subtitle,
-    Title,
-} from 'native-base';
-
+import { Text, Alert, View } from 'react-native';
 import { handleAddDeck } from '../actions/decks';
 import { connect } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import 'react-native-get-random-values';
-import { Overlay } from 'react-native-elements';
+import ActivityOverlay from './ActivityOverlay';
+import { styles } from '../utils/styles';
+import { Button, Input } from 'react-native-elements';
 
 class AddDeck extends React.Component {
 
     state = {
         name: '',
+        errorMessage: '',
         loading: false,
     };
     onChangeText = (name) => {
@@ -39,16 +28,16 @@ class AddDeck extends React.Component {
         const { name } = this.state;
 
         if (name.trim() === '') {
-            Alert.alert('Error', 'Please enter a Deck name');
+            this.setState({ errorMessage: 'Please enter a Deck name' })
             return;
         }
 
         if (this.deckExists(name)) {
-            Alert.alert('Error', `Deck with name "${name}" already exists`);
+            this.setState({ errorMessage: `Deck with name "${name}" already exists` })
             return;
         }
 
-        this.setState({ loading: true })
+        this.setState({ loading: true, errorMessage : '' })
         const { handleAddDeck } = this.props;
 
         const deck = { id: uuid(), name: name, cards: [] };
@@ -60,28 +49,28 @@ class AddDeck extends React.Component {
     };
 
     render() {
-        const { name, loading } = this.state;
+        const { name, loading, errorMessage } = this.state;
 
         return (
 
-          <Container>
-              <Overlay isVisible={loading}>
-                  <Spinner/>
-                  <Text>Adding Deck...</Text>
-              </Overlay>
+          <View style={styles.container}>
 
-              <Content contentContainerStyle={{ justifyContent: 'center', flex: 1, padding: 50 }}>
-                  <Form style={{ marginBottom: 20 }}>
-                      <Item last>
-                          <Input onChangeText={this.onChangeText} value={name} placeholder="Deck name"/>
-                      </Item>
-                  </Form>
-                  <Button primary full onPress={this.onSubmit}>
-                      <Subtitle>Submit</Subtitle>
-                  </Button>
-              </Content>
+              <ActivityOverlay isVisible={loading}>
+                  <Text>Deleting Deck...</Text>
+              </ActivityOverlay>
 
-          </Container>
+              <Input onChangeText={this.onChangeText}
+                     value={name}
+                     disabled={loading}
+                     errorMessage={errorMessage}
+                     placeholder="Deck name"/>
+
+              <Button title={'Create Deck'}
+                      disabled={loading}
+                      buttonStyle={{ marginBottom: 20 }}
+                      onPress={this.onSubmit}/>
+
+          </View>
         );
     }
 }

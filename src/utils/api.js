@@ -1,6 +1,10 @@
 import 'react-native-get-random-values';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+function Sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
 const api = (function() {
 
     const STORAGE_KEY = 'UdacityFlashcards:Decks';
@@ -14,13 +18,13 @@ const api = (function() {
     const saveDeck = async (deck) => {
         let decks = await getDecks();
         decks = JSON.stringify({ ...decks, [deck.id]: { ...deck } });
-        return AsyncStorage.setItem(STORAGE_KEY, decks).then(() => deck);
+        return AsyncStorage.setItem(STORAGE_KEY, decks).then(() => { return deck});
     }
 
     const deleteDeck = async (deckId) => {
         let decks = await getDecks();
         delete decks[deckId];
-        return AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks)).then(() => deckId);
+        return AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks)).then(() => {return deckId });
 
     };
 

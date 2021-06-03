@@ -1,18 +1,13 @@
 import React from 'react';
-import { BackHandler, Text } from 'react-native';
-
-import {
-    Button,
-    Container,
-    Content,
-    Spinner,
-    Subtitle,
-
-} from 'native-base';
+import { Text, View } from 'react-native';
 import { handleDeleteDeck } from '../actions/decks';
-import { Overlay } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
-
+import { purpleLight, turquoise } from '../utils/color';
+import { styles } from '../utils/styles';
+import ActivityOverlay from './ActivityOverlay';
+import DeckItem from './DeckItem';
+import AddCardButton from './AddCardButton';
 
 class Deck extends React.Component {
 
@@ -20,25 +15,13 @@ class Deck extends React.Component {
         loading: false,
     };
 
-    backAction = () => {
-        this.props.navigation.navigate('Home');
-    };
-
     componentDidMount() {
-        this.backHandler = BackHandler.addEventListener(
-          'hardwareBackPress',
-          this.backAction,
-        );
 
         const { deck } = this.props.route.params;
 
-        this.props.navigation.setOptions({ title: deck.name })
-
-
-    }
-
-    componentWillUnmount() {
-        this.backHandler.remove();
+        this.props.navigation.setOptions({
+            headerTitle: deck.name
+        });
     }
 
     onDeleteDeck = () => {
@@ -66,30 +49,26 @@ class Deck extends React.Component {
         const { loading } = this.state;
 
         return (
-          <Container>
+          <View style={styles.container}>
 
 
-              <Overlay isVisible={loading}>
-                  <Spinner/>
+              <ActivityOverlay isVisible={loading}>
                   <Text>Deleting Deck...</Text>
-              </Overlay>
+              </ActivityOverlay>
+
+              <AddCardButton deck={deck} buttonStyle={{ marginBottom: 20 }} />
+
+              <Button title={'Start Quiz'}
+                      buttonStyle={{ backgroundColor: turquoise, marginBottom: 20 }}
+                      onPress={this.startQuiz} style={{ marginBottom: 20 }}/>
+
+              <Button title={'Delete Deck'}
+                      type={'outline'}
+                      buttonStyle={{ borderColor: purpleLight }}
+                      onPress={this.onDeleteDeck} style={{ marginBottom: 20 }}/>
 
 
-              <Content contentContainerStyle={{ justifyContent: 'center', flex: 1, padding: 50 }}>
-                  <Button primary full style={{ marginBottom: 20 }}
-                          onPress={() => this.props.navigation.navigate('AddCard', { deck: deck })}>
-                      <Subtitle>Add Card</Subtitle>
-                  </Button>
-
-                  <Button transparent bordered dark full onPress={this.startQuiz} style={{ marginBottom: 20 }}>
-                      <Text>Start Quiz</Text>
-                  </Button>
-
-                  <Button transparent danger full onPress={this.onDeleteDeck}>
-                      <Text>Delete Deck</Text>
-                  </Button>
-              </Content>
-          </Container>
+          </View>
         );
     }
 }

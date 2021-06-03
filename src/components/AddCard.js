@@ -1,93 +1,82 @@
 import React from 'react';
-import { Text, Alert } from 'react-native';
-import {
-    Body,
-    Button,
-    Container,
-    Content,
-    Form,
-    Header,
-    Input,
-    Item,
-    Label,
-    Left,
-    Right,
-    Subtitle,
-    Title,
-} from 'native-base';
+import { Text, Alert, View } from 'react-native';
 import Deck from '../models/Deck';
 import { handleAddDeck } from '../actions/decks';
 import { connect } from 'react-redux';
-import { v4 as uuid } from 'uuid';
 import 'react-native-get-random-values';
+import { styles } from '../utils/styles';
+import { Button, Input } from 'react-native-elements';
+import ActivityOverlay from './ActivityOverlay';
 
 class AddCard extends React.Component {
 
     state = {
         question: '',
         answer: '',
+        errorMessageQuestion : '',
+        errorMessageAnswer : ''
     };
     onChangeQuestion = (question) => {
-        this.setState({ question });
+        const errorMessageQuestion = question.trim() === '' ? 'Please enter a question' : ''
+        this.setState({ question, errorMessageQuestion });
     };
 
     onChangeAnswer = (answer) => {
-        this.setState({ answer });
-    };
-
-    deckExists = (name) => {
-
-        const { decks } = this.props;
-        return decks.find((deck) => { return deck.name === name;});
-
+        const errorMessageAnswer = answer.trim() === '' ? 'Please enter a answer' : ''
+        this.setState({ answer, errorMessageAnswer });
     };
 
     onSubmit = () => {
-
-        const { deck } = this.props.route.params;
         const { question, answer } = this.state;
 
-        if(question.trim() === '') {
-            Alert.alert('Error', 'Please enter a question');
+        if(question.trim() === '' || answer.trim() === '') {
             return;
         }
 
-        if(answer.trim() === '') {
-            Alert.alert('Error', 'Please enter a answer');
-            return;
-        }
+        this.setState({ errorMessageQuestion: '', errorMessageAnswer: '' });
+
+        const { deck } = this.props.route.params;
 
         deck.cards.push({ question, answer });
         const { handleAddDeck } = this.props;
-        handleAddDeck(deck);
-        this.setState({ question: '', answer: '' });
-        this.props.navigation.navigate('Deck', { deck: deck });
-
+        handleAddDeck(deck).then((deck) => {
+            this.setState({ question: '', answer: '' });
+            this.props.navigation.navigate('Deck', { deck });
+        } )
     };
 
     render() {
-        const { question, answer } = this.state;
+        const { question, answer, errorMessageAnswer, errorMessageQuestion } = this.state;
 
         const { isLoading } = this.props;
+        const isError  = errorMessageAnswer !== '' || errorMessageQuestion !== ''
+        const disabled = isLoading || isError || question === '' || answer === '';
 
         return (
 
-          <Container>
-              <Content contentContainerStyle={{ justifyContent: 'center', flex: 1, padding: 50 }}>
-                  <Form style={{ marginBottom: 20 }}>
-                      <Item last>
-                          <Input onChangeText={this.onChangeQuestion} value={question} placeholder="Question"/>
-                      </Item>
-                      <Item last>
-                          <Input onChangeText={this.onChangeAnswer} value={answer} placeholder="Answer"/>
-                      </Item>
-                  </Form>
-                  <Button primary full onPress={this.onSubmit}>
-                      <Subtitle>Submit</Subtitle>
-                  </Button>
-              </Content>
+          <View style={styles.container}>
 
-          </Container>
+              <ActivityOverlay isVisible={isLoading}>
+                  <Text>Adding card to deck...</Text>
+              </ActivityOverlay>
+
+              <Input onChangeText={this.onChangeQuestion}
+                     value={question}
+                     disabled={isLoading}
+                     errorMessage={errorMessageQuestion}
+                     placeholder="Question"/>
+
+              <Input onChangeText={this.onChangeAnswer}
+                     value={answer}
+                     disabled={isLoading}
+                     errorMessage={errorMessageAnswer}
+                     placeholder="Answer"/>
+
+              <Button title={'Submit'}
+                      disabled={disabled}
+                      buttonStyle={{ marginBottom: 20 }}
+                      onPress={this.onSubmit}/>
+          </View>
         );
     }
 }

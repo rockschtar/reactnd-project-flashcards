@@ -59,6 +59,7 @@ export function handleAddDeck(deck) {
           deck => {
               dispatch(addDeck(deck))
               dispatch(isLoading(false))
+              return deck;
           }
 
         )

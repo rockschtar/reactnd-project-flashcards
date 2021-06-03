@@ -20,13 +20,12 @@
     "expo-splash-screen": "~0.10.2",
     "expo-status-bar": "~1.0.4",
     "expo-updates": "~0.5.4",
-    "native-base": "^2.15.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
     "react-native-elements": "^3.4.1",
     "react-native-gesture-handler": "~1.10.2",
-    "react-native-get-random-values": "^1.7.0",
+    "react-native-get-random-values": "~1.7.0",
     "react-native-reanimated": "~2.1.0",
     "react-native-screens": "~3.0.0",
     "react-native-unimodules": "~0.13.3",
@@ -36,11 +35,11 @@
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.3.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "prop-types": "^15.7.2"
+    "@babel/core": "^7.9.0"
   },
   "private": true
 }
