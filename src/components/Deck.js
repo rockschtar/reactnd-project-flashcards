@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Alert, Text, View } from 'react-native';
 import { handleDeleteDeck } from '../actions/decks';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -24,7 +24,7 @@ class Deck extends React.Component {
         });
     }
 
-    onDeleteDeck = () => {
+    deleteDeck = () => {
         const { deck } = this.props.route.params;
         const { handleDeleteDeck } = this.props;
 
@@ -35,7 +35,27 @@ class Deck extends React.Component {
                 this.props.navigation.navigate('Home', { screen: 'Home' });
             });
         });
+    }
+    onDeleteDeck = () => {
 
+        Alert.alert(
+          "Confirm",
+          "Are you sure to delete this deck?",
+          [
+              {
+                  text: "Yes",
+                  onPress: this.deleteDeck,
+                  style: "default",
+              },
+              {
+                  text: "Cancel",
+                  style: "cancel",
+              },
+          ],
+          {
+              cancelable: true
+          }
+        );
     };
 
     startQuiz = () => {
