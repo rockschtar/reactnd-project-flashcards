@@ -56,7 +56,7 @@ class Deck extends React.Component {
                   <Text>Deleting Deck...</Text>
               </ActivityOverlay>
 
-              <DeckItem deck={deck} />
+              <DeckItem deck={deck} containerStyle={{ marginBottom: 100}} />
 
               <AddCardButton deck={deck} buttonStyle={{ marginBottom: 20 }} />
 
