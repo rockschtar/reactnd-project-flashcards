@@ -3,7 +3,7 @@ import { Alert, Text, View } from 'react-native';
 import { handleDeleteDeck } from '../actions/decks';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { purpleLight, turquoise } from '../utils/color';
+import { purpleLight, red, turquoise } from '../utils/color';
 import { styles } from '../utils/styles';
 import ActivityOverlay from './ActivityOverlay';
 import AddCardButton from './AddCardButton';
@@ -86,7 +86,8 @@ class Deck extends React.Component {
 
               <Button title={'Delete Deck'}
                       type={'outline'}
-                      buttonStyle={{ borderColor: purpleLight }}
+                      buttonStyle={{ borderColor: red }}
+                      titleStyle={{ color: red}}
                       onPress={this.onDeleteDeck} style={{ marginBottom: 20 }}/>
 
 
