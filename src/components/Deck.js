@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { purpleLight, turquoise } from '../utils/color';
 import { styles } from '../utils/styles';
 import ActivityOverlay from './ActivityOverlay';
-import DeckItem from './DeckItem';
 import AddCardButton from './AddCardButton';
+import DeckItem from './DeckItem';
 
 class Deck extends React.Component {
 
@@ -55,6 +55,8 @@ class Deck extends React.Component {
               <ActivityOverlay isVisible={loading}>
                   <Text>Deleting Deck...</Text>
               </ActivityOverlay>
+
+              <DeckItem deck={deck} />
 
               <AddCardButton deck={deck} buttonStyle={{ marginBottom: 20 }} />
 

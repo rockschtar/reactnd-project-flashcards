@@ -56,7 +56,7 @@ class AddDeck extends React.Component {
           <View style={styles.container}>
 
               <ActivityOverlay isVisible={loading}>
-                  <Text>Deleting Deck...</Text>
+                  <Text>Adding Deck...</Text>
               </ActivityOverlay>
 
               <Input onChangeText={this.onChangeText}
