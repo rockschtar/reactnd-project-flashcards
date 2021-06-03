@@ -19,9 +19,11 @@ export default function decks (state = {}, action) {
 
         case DELETE_DECK:
             const { deckId } = action
-            const filterdDecks = Object.values(state).filter((deck) => { return deck.id !== deckId})
+            const next = state;
+            delete next[deckId];
+
             return {
-                ...filterdDecks
+                ...next
             }
 
         case ADD_CARD:

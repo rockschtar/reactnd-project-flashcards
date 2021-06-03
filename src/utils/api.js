@@ -23,6 +23,7 @@ const api = (function() {
 
     const deleteDeck = async (deckId) => {
         let decks = await getDecks();
+        decks[deckId] = undefined;
         delete decks[deckId];
         return AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks)).then(() => {return deckId });
 

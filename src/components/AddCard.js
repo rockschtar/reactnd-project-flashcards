@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, Alert, View } from 'react-native';
-import Deck from '../models/Deck';
 import { handleAddDeck } from '../actions/decks';
 import { connect } from 'react-redux';
 import 'react-native-get-random-values';
