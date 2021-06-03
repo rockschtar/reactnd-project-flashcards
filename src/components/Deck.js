@@ -8,6 +8,7 @@ import { styles } from '../utils/styles';
 import ActivityOverlay from './ActivityOverlay';
 import AddCardButton from './AddCardButton';
 import DeckItem from './DeckItem';
+import { StackActions } from '@react-navigation/native';
 
 class Deck extends React.Component {
 
@@ -19,9 +20,21 @@ class Deck extends React.Component {
 
         const { deck } = this.props.route.params;
 
-        this.props.navigation.setOptions({
+        const { navigation } = this.props;
+
+        navigation.setOptions({
             headerTitle: deck.name
         });
+
+        this._unsubscribe = navigation.addListener('beforeRemove', (e) => {
+            e.preventDefault();
+            const pushAction = StackActions.push('Home');
+            navigation.dispatch(pushAction);
+        });
+    }
+
+    componentWillUnmount() {
+        this._unsubscribe();
     }
 
     deleteDeck = () => {
