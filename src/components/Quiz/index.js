@@ -7,6 +7,7 @@ import Question from './components/Question';
 import Answer from './components/Answer';
 import AddCardButton from '../AddCardButton';
 import BackToDeckButton from './components/BackToDeckButton';
+import { cancelNotification, scheduleNotification } from '../../utils/notification';
 
 export default class Quiz extends React.Component {
     state = {
@@ -22,20 +23,22 @@ export default class Quiz extends React.Component {
     onShowAnswer = () => {
         this.setState({ showAnswer: true });
     };
-    onCorrect = () => {
+
+    onAnswer = (isCorrect = true) => {
         let { correct, index } = this.state;
 
-        correct++;
         index++;
 
-        this.setState({ correct, index, showAnswer: false });
-    };
-    onInCorrect = () => {
-        let { index } = this.state;
+        if (isCorrect) {
+            correct++;
+        }
 
-        index++;
+        this.setState({ index, correct, showAnswer: false }, () => {
+            if (this.isFinished()) {
+                cancelNotification().then(() => scheduleNotification());
+            }
+        });
 
-        this.setState({ index, showAnswer: false });
     };
 
     restart = () => {
@@ -46,11 +49,16 @@ export default class Quiz extends React.Component {
         });
     };
 
+    isFinished = () => {
+        const { deck } = this.props.route.params;
+        const { index } = this.state;
+        return deck.cards.length > 0 && index === deck.cards.length;
+    };
     getQuizData = () => {
 
         const { deck } = this.props.route.params;
         const { showAnswer, index, correct } = this.state;
-        const isFinished = deck.cards.length > 0 && index === deck.cards.length;
+        const isFinished = this.isFinished();
         const card = isFinished || deck.cards.length === 0 ? {} : deck.cards[index];
         const cardsRemaining = (deck.cards.length - index);
         const noCards = deck.cards.length === 0;
@@ -93,7 +101,8 @@ export default class Quiz extends React.Component {
                         {!showAnswer ?
                           <Question card={card} onShowAnswer={this.onShowAnswer}/>
                           :
-                          <Answer card={card} onCorrect={this.onCorrect} onIncorrect={this.onInCorrect}/>}
+                          <Answer card={card} onCorrect={() => this.onAnswer()}
+                                  onIncorrect={() => this.onAnswer(false)}/>}
                     </>
                     }
 

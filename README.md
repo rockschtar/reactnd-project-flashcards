@@ -14,6 +14,8 @@ The project can be build with npm or yarn.
 
 Run `npm install` or `yarn install` to build this project.
 
+Project is tested heavily with Android, but should work on iOS also.
+
 ## Run
 
 Start the development server with `expo start`
