@@ -26,7 +26,9 @@ export function scheduleNotification() {
                             title: 'It\'s time to take a quiz',
                         },
                         trigger,
-                    }).then(() => {});
+                    }).then(() => {
+                        AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+                    });
                 }
             });
         }
