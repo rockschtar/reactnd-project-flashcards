@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Alert, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { handleAddDeck } from '../actions/decks';
 import { connect } from 'react-redux';
 import { v4 as uuid } from 'uuid';
@@ -28,24 +28,24 @@ class AddDeck extends React.Component {
         const { name } = this.state;
 
         if (name.trim() === '') {
-            this.setState({ errorMessage: 'Please enter a Deck name' })
+            this.setState({ errorMessage: 'Please enter a Deck name' });
             return;
         }
 
         if (this.deckExists(name)) {
-            this.setState({ errorMessage: `Deck with name "${name}" already exists` })
+            this.setState({ errorMessage: `Deck with name "${name}" already exists` });
             return;
         }
 
-        this.setState({ loading: true, errorMessage : '' })
+        this.setState({ loading: true, errorMessage: '' });
         const { handleAddDeck } = this.props;
 
         const deck = { id: uuid(), name: name, cards: [] };
         handleAddDeck(deck).then(() => {
             this.setState({ loading: false, name: '' }, () => {
                 this.props.navigation.navigate('Deck', { deck: deck });
-            })
-        })
+            });
+        });
     };
 
     render() {

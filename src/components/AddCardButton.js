@@ -13,11 +13,11 @@ const AddCardButton = (props) => {
       <Button title={'Add Card'}
               {...rest}
               onPress={() => navigation.navigate('AddCard', { deck })}/>
-    )
-}
+    );
+};
 
 AddCardButton.propTypes = {
-    deck: PropTypes.object.isRequired
-}
+    deck: PropTypes.object.isRequired,
+};
 
 export default AddCardButton;

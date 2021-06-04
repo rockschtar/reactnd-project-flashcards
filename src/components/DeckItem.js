@@ -12,12 +12,12 @@ const DeckItem = (props) => {
           <Card.Divider/>
           <Text style={{ alignSelf: 'center' }}>Cards: {deck.cards.length}</Text>
       </Card>
-    )
+    );
 
-}
+};
 
 DeckItem.propTypes = {
-    deck: PropTypes.object.isRequired
-}
+    deck: PropTypes.object.isRequired,
+};
 
-export default DeckItem
+export default DeckItem;

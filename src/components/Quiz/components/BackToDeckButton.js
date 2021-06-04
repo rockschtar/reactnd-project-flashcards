@@ -3,7 +3,6 @@ import { turquoise } from '../../../utils/color';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
-import AddCardButton from '../../AddCardButton';
 
 const BackToDeckButton = (props) => {
 

@@ -1,5 +1,5 @@
 import { Overlay } from 'react-native-elements';
-import { ActivityIndicator, Text } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { purple } from '../utils/color';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -11,15 +11,15 @@ const ActivityOverlay = (props) => {
     return (
 
       <Overlay isVisible={isVisible}>
-          <ActivityIndicator size="large" animating={true} color={purple} />
+          <ActivityIndicator size="large" animating={true} color={purple}/>
           {props.children}
       </Overlay>
-    )
+    );
 
-}
+};
 
 ActivityOverlay.propTypes = {
-    isVisible: PropTypes.bool
-}
+    isVisible: PropTypes.bool,
+};
 
 export default ActivityOverlay;

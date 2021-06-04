@@ -3,7 +3,7 @@ import { Alert, Text, View } from 'react-native';
 import { handleDeleteDeck } from '../actions/decks';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { purpleLight, red, turquoise } from '../utils/color';
+import { red, turquoise } from '../utils/color';
 import { styles } from '../utils/styles';
 import ActivityOverlay from './ActivityOverlay';
 import AddCardButton from './AddCardButton';
@@ -23,7 +23,7 @@ class Deck extends React.Component {
         const { navigation } = this.props;
 
         navigation.setOptions({
-            headerTitle: deck.name
+            headerTitle: deck.name,
         });
 
         this._unsubscribe = navigation.addListener('beforeRemove', (e) => {
@@ -48,26 +48,26 @@ class Deck extends React.Component {
                 this.props.navigation.navigate('Home', { screen: 'Home' });
             });
         });
-    }
+    };
     onDeleteDeck = () => {
 
         Alert.alert(
-          "Confirm",
-          "Are you sure to delete this deck?",
+          'Confirm',
+          'Are you sure to delete this deck?',
           [
               {
-                  text: "Yes",
+                  text: 'Yes',
                   onPress: this.deleteDeck,
-                  style: "default",
+                  style: 'default',
               },
               {
-                  text: "Cancel",
-                  style: "cancel",
+                  text: 'Cancel',
+                  style: 'cancel',
               },
           ],
           {
-              cancelable: true
-          }
+              cancelable: true,
+          },
         );
     };
 
@@ -89,9 +89,9 @@ class Deck extends React.Component {
                   <Text>Deleting Deck...</Text>
               </ActivityOverlay>
 
-              <DeckItem deck={deck} containerStyle={{ marginBottom: 100}} />
+              <DeckItem deck={deck} containerStyle={{ marginBottom: 100 }}/>
 
-              <AddCardButton deck={deck} buttonStyle={{ marginBottom: 20 }} />
+              <AddCardButton deck={deck} buttonStyle={{ marginBottom: 20 }}/>
 
               <Button title={'Start Quiz'}
                       buttonStyle={{ backgroundColor: turquoise, marginBottom: 20 }}
@@ -100,7 +100,7 @@ class Deck extends React.Component {
               <Button title={'Delete Deck'}
                       type={'outline'}
                       buttonStyle={{ borderColor: red }}
-                      titleStyle={{ color: red}}
+                      titleStyle={{ color: red }}
                       onPress={this.onDeleteDeck} style={{ marginBottom: 20 }}/>
 
 

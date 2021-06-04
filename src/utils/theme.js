@@ -4,6 +4,6 @@ export const theme = {
     colors: {
         primary: purple,
         secondary: purpleLight,
-        error: red
-    }
-}
+        error: red,
+    },
+};

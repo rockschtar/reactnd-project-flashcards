@@ -1,8 +1,7 @@
-import { useNavigation } from '@react-navigation/native';
+
 import { Button, Text } from 'react-native-elements';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { turquoise } from '../../../utils/color';
 import BackToDeckButton from './BackToDeckButton';
 
 const Score = (props) => {
@@ -20,7 +19,7 @@ const Score = (props) => {
 
           <Button title={'Start Quiz again'} onPress={onRestart} buttonStyle={{ marginBottom: 20 }}/>
 
-          <BackToDeckButton deck={deck} />
+          <BackToDeckButton deck={deck}/>
       </>
 
     );

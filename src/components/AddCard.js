@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Alert, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { handleAddDeck } from '../actions/decks';
 import { connect } from 'react-redux';
 import 'react-native-get-random-values';
@@ -12,23 +12,23 @@ class AddCard extends React.Component {
     state = {
         question: '',
         answer: '',
-        errorMessageQuestion : '',
-        errorMessageAnswer : ''
+        errorMessageQuestion: '',
+        errorMessageAnswer: '',
     };
     onChangeQuestion = (question) => {
-        const errorMessageQuestion = question.trim() === '' ? 'Please enter a question' : ''
+        const errorMessageQuestion = question.trim() === '' ? 'Please enter a question' : '';
         this.setState({ question, errorMessageQuestion });
     };
 
     onChangeAnswer = (answer) => {
-        const errorMessageAnswer = answer.trim() === '' ? 'Please enter a answer' : ''
+        const errorMessageAnswer = answer.trim() === '' ? 'Please enter a answer' : '';
         this.setState({ answer, errorMessageAnswer });
     };
 
     onSubmit = () => {
         const { question, answer } = this.state;
 
-        if(question.trim() === '' || answer.trim() === '') {
+        if (question.trim() === '' || answer.trim() === '') {
             return;
         }
 
@@ -41,14 +41,14 @@ class AddCard extends React.Component {
         handleAddDeck(deck).then((deck) => {
             this.setState({ question: '', answer: '' });
             this.props.navigation.navigate('Deck', { deck });
-        } )
+        });
     };
 
     render() {
         const { question, answer, errorMessageAnswer, errorMessageQuestion } = this.state;
 
         const { isLoading } = this.props;
-        const isError  = errorMessageAnswer !== '' || errorMessageQuestion !== ''
+        const isError = errorMessageAnswer !== '' || errorMessageQuestion !== '';
         const disabled = isLoading || isError || question === '' || answer === '';
 
         return (

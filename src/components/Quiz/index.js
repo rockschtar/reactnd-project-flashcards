@@ -8,8 +8,7 @@ import Answer from './components/Answer';
 import AddCardButton from '../AddCardButton';
 import BackToDeckButton from './components/BackToDeckButton';
 
-export default class Quiz extends React.Component
-{
+export default class Quiz extends React.Component {
     state = {
         correct: 0,
         index: 0,
@@ -53,7 +52,7 @@ export default class Quiz extends React.Component
         const { showAnswer, index, correct } = this.state;
         const isFinished = deck.cards.length > 0 && index === deck.cards.length;
         const card = isFinished || deck.cards.length === 0 ? {} : deck.cards[index];
-        const cardsRemaining = (deck.cards.length - index) - 1;
+        const cardsRemaining = (deck.cards.length - index);
         const noCards = deck.cards.length === 0;
 
         return {
@@ -79,9 +78,9 @@ export default class Quiz extends React.Component
                     <Text style={{ marginBottom: 20 }}>
                         You cannot start the quiz because there are no cards in the deck
                     </Text>
-                    <AddCardButton deck={deck} buttonStyle={{ marginBottom: 20 }} />
+                    <AddCardButton deck={deck} buttonStyle={{ marginBottom: 20 }}/>
 
-                    <BackToDeckButton deck={deck} />
+                    <BackToDeckButton deck={deck}/>
                 </>
                 :
                 <>

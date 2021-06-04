@@ -1,7 +1,6 @@
 import { Button, Text } from 'react-native-elements';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Question from './Question';
 import { green, red } from '../../../utils/color';
 
 const Answer = (props) => {
@@ -17,11 +16,10 @@ const Answer = (props) => {
     );
 };
 
-
 Answer.propTypes = {
     card: PropTypes.object.isRequired,
     onCorrect: PropTypes.func.isRequired,
-    onIncorrect: PropTypes.func.isRequired
+    onIncorrect: PropTypes.func.isRequired,
 };
 
 export default Answer;

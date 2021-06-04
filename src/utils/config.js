@@ -1,5 +1,5 @@
 const config = {
-    logging: false
-}
+    logging: false,
+};
 
 export default config;

@@ -4,7 +4,7 @@ export function scheduleNotification() {
 
     Notifications.requestPermissionsAsync().then((notificationPermissionStatus) => {
 
-        if(notificationPermissionStatus.status === 'granted') {
+        if (notificationPermissionStatus.status === 'granted') {
             Notifications.cancelAllScheduledNotificationsAsync().then(() => {});
 
             let trigger = new Date();
@@ -16,8 +16,8 @@ export function scheduleNotification() {
                 content: {
                     title: 'It\'s time to take a quiz',
                 },
-                trigger
-            }).then(() => {})
+                trigger,
+            }).then(() => {});
         }
-    })
+    });
 }

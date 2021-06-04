@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import { styles } from '../utils/styles';
-import { Card, Text, Button } from 'react-native-elements';
+import { Text, Button } from 'react-native-elements';
 import DeckItem from './DeckItem';
 
 const Home = (props) => {
@@ -21,7 +21,7 @@ const Home = (props) => {
                   You don't have any Decks
               </Text>
 
-              <Button title="Add Deck" onPress={() => navigation.navigate('AddDeck')} />
+              <Button title="Add Deck" onPress={() => navigation.navigate('AddDeck')}/>
 
           </>
 
@@ -31,7 +31,7 @@ const Home = (props) => {
                     renderItem={({ item }) =>
                       <TouchableOpacity key={item.id} onPress={() => navigation.navigate('Deck', { deck: item })}>
 
-                          <DeckItem deck={item} />
+                          <DeckItem deck={item}/>
 
                       </TouchableOpacity>
 
@@ -39,16 +39,10 @@ const Home = (props) => {
           />
       </View>
     );
-}
-;
+};
 
-export default connect((
-{ decks },
-) =>
-{
+export default connect(({ decks }) => {
     return {
         decks: Object.values(decks),
     };
-}
-,
-)(Home);
+})(Home);
